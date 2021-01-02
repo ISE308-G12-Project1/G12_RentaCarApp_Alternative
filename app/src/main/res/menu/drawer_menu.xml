@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/nav_crud"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_add_new_car"
+            android:icon="@drawable/ic_edit_cars"
+            android:title="@string/string_nav_available_car_list">
+        </item>
+
+        <item
+            android:id="@+id/nav_car_rent"
+            android:icon="@drawable/ic_menu_directions_car_"
+            android:title="@string/string_edit">
+        </item>
+
+        <item
+            android:id="@+id/nav_car_search"
+            android:icon="@drawable/ic_baseline_search_24"
+            android:title="@string/string_search">
+        </item>
+
+        <item
+            android:id="@+id/nav_all_cars"
+            android:icon="@drawable/ic_add_new_car"
+            android:title="@string/all_cars">
+        </item>
+
+    </group>
+
+</menu>

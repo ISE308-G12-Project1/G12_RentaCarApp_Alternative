@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">G12 Rent a Car App</string>
+    <string name="string_nav_available_car_list">Add New Car</string>
+    <string name="string_search">Search</string>
+    <string name="string_edit">Rented Cars</string>
+    <string name="car_model">Car Model</string>
+    <string name="suv_hatchback_etc">SUV, Hatchback etc.</string>
+    <string name="rent">Rent</string>
+    <string name="nav_drawer_open">Open Navigation Drawer</string>
+    <string name="nav_drawer_close">Close Navigation Drawer</string>
+    <string name="all_cars">All Cars</string>
+</resources>
