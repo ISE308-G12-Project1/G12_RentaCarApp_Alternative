@@ -1,14 +1,17 @@
 package ise308.polat.utku.g12rentacarapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 class ShowCarFragment : Fragment() {
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -30,6 +33,14 @@ class ShowCarFragment : Fragment() {
         tvCarFlag.text = arguments!!.getString("car flag")
         tvCarPlate.text = arguments!!.getString("car plate")
 
+        val buttonRemove = activity!!.findViewById<Button>(R.id.button_remove)
+        inflater.inflate(R.layout.dialog_show_cars, container, false)
+
+        buttonRemove?.setOnClickListener {
+            Toast.makeText(activity!!.applicationContext, "Please enter the car model that you want to delete", Toast.LENGTH_LONG).show()
+            val dialogShowCarNote = DialogShowCars()
+            dialogShowCarNote.show(activity!!.supportFragmentManager,"125")
+        }
 
         return view
     }

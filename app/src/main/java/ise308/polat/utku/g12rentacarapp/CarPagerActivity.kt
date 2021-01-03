@@ -3,6 +3,7 @@ package ise308.polat.utku.g12rentacarapp
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -11,7 +12,7 @@ import androidx.viewpager.widget.ViewPager
 
 private var carList : ArrayList<Cars>? = null
 private var jsonSerializer : JSONSerializer? = null
-
+private var carFragmentList = java.util.ArrayList<Fragment>()
 class CarPagerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +27,7 @@ class CarPagerActivity : AppCompatActivity() {
             carList = ArrayList()
         }
 
-        var carFragmentList = java.util.ArrayList<Fragment>()
+
         for (car in carList!!) {
             carFragmentList.add(ShowCarFragment.newInstance(car))
         }
@@ -35,11 +36,23 @@ class CarPagerActivity : AppCompatActivity() {
         findViewById<ViewPager>(R.id.pager_cars).adapter = pageAdapter
 
 
-        val index = pageAdapter.getItemPosition(carFragmentList)
+    }
+    fun deleteCars(carModel : String) {
 
-        val buttonRemove = findViewById<Button>(R.id.button_remove)
-        buttonRemove?.setOnClickListener {
-            carList!!.removeAt(index)
+
+        var i = 0
+        var flag = 0
+        while (i < carList!!.size) {
+            if (carList!![i].carModel == carModel) {
+                Toast.makeText(applicationContext, "We found ${carModel}, and delete it", Toast.LENGTH_LONG).show()
+                carList!!.remove(carList!![i])
+                Toast.makeText(applicationContext, "We found ${carList!![i].carModel}, and delete it", Toast.LENGTH_LONG).show()
+                flag++
+            }
+            i++
+        }
+        if(flag == 0) {
+            Toast.makeText(applicationContext, "We could not found" , Toast.LENGTH_LONG).show()
         }
 
     }

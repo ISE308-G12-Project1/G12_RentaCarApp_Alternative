@@ -1,9 +1,13 @@
 package ise308.polat.utku.g12rentacarapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -19,7 +23,7 @@ import ise308.polat.utku.g12rentacarapp.ui.RentCarFragment
 import ise308.polat.utku.g12rentacarapp.ui.SearchFragment
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private var jsonSerializer: JSONSerializer? = null
     private lateinit var carList: ArrayList<Cars>
     private var recyclerViewCars : RecyclerView? = null
@@ -60,6 +64,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             newCarDialog.show(supportFragmentManager, "123")
         }
 
+        deleteCars("Ford Focus")
+
         recyclerViewCars = findViewById<RecyclerView>(R.id.recyclerViewCars) as RecyclerView
         carsAdapter = CarsAdapter(carList , this)
         val layoutManager = LinearLayoutManager(applicationContext)
@@ -68,14 +74,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recyclerViewCars!!.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
         recyclerViewCars!!.adapter = carsAdapter
 
-        val inflater = layoutInflater
-        val removeCarDialog = inflater?.inflate(R.layout.note_frame, null)
-        val buttonRemove = removeCarDialog.findViewById<Button>(R.id.button_remove)
 
-        buttonRemove.setOnClickListener {
-            carList.removeAt(1)
+    }
+
+
+    fun deleteCars(carModel : String) {
+
+        var i = 0
+        var flag = 0
+        while (i < carList!!.size) {
+            if (carList!![i].carModel == carModel) {
+                Toast.makeText(applicationContext, "We found ${carModel}, and delete it", Toast.LENGTH_LONG).show()
+                carList!!.remove(carList!![i])
+                Toast.makeText(applicationContext, "We found ${carList!![i].carModel}, and delete it", Toast.LENGTH_LONG).show()
+                flag++
+            }
+            i++
         }
-
+        if(flag == 0) {
+            Toast.makeText(applicationContext, "We could not found" , Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onBackPressed() {
@@ -86,6 +104,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    fun searchCar(searchedKey: String) {
+        var i = 0
+        var flag = 0
+        while (i < carList.size) {
+            if (carList[i].carModel == searchedKey) {
+                Toast.makeText(applicationContext, "We found, we have: " + carList[i].carModel +  " and price is: " +  carList[i].rentPrice, Toast.LENGTH_LONG).show()
+                flag++
+            }
+            i++
+        }
+        if (flag == 0){
+            Toast.makeText(applicationContext, "We could not found" , Toast.LENGTH_LONG).show()
+        }
+
+
+    }
+
     fun createNewCar(newCar : Cars){
         carList.add(newCar)
     }
@@ -94,7 +129,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         try {
             jsonSerializer!!.save(this.carList!!)
         } catch (e: Exception) {
-            //Log.e(TAG, "error loading notes :((")
         }
     }
 
@@ -118,6 +152,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onClick(p0: View?) {
+        when(p0?.id){
+            R.id.button_remove->{
+                val intent = Intent(applicationContext,MainActivity::class.java)
+                startActivity(intent)
+                Toast.makeText(applicationContext, "m", Toast.LENGTH_LONG).show()
+                val dialogShowCarNote = DialogShowCars()
+                dialogShowCarNote.show(supportFragmentManager,"125")
+            }
+        }
     }
 
 }
